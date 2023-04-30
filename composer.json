@@ -1,0 +1,53 @@
+{
+  "name": "dbt/laravel-project",
+  "description": "Laravel Project Scaffolding",
+  "keywords": [
+    "dbt",
+    "php",
+    "laravel"
+  ],
+  "homepage": "https://github.com/dbt/laravel-project",
+  "license": "MIT",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Daniel S. Deboer",
+      "email": "daniel.s.deboer@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0|^8.1",
+    "laravel/framework": "^8.0"
+  },
+  "require-dev": {
+    "ext-pcov": "*",
+    "orchestra/testbench-browser-kit": "^6.0",
+    "orchestra/testbench": "^6.0",
+    "friendsofphp/php-cs-fixer": "^3.9",
+    "larapack/dd": "^1.1",
+    "phpunit/phpunit": "^9.0",
+    "vimeo/psalm": "^4.24"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dbt\\LaravelProject\\": ["src"]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Dbt\\LaravelProject\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test-integration": "phpunit --configuration=phpunit.xml --no-coverage --testsuite integration",
+    "test-unit": "phpunit --configuration=phpunit.xml --no-coverage --testsuite unit",
+    "test": ["@test-integration", "@test-unit"],
+    "coverage": "phpunit --configuration=phpunit.xml --coverage-html reports/coverage",
+    "pcov": "php -d pcov.enabled=1 vendor/phpunit/phpunit/phpunit --coverage-html reports/coverage",
+    "stat": "psalm"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
