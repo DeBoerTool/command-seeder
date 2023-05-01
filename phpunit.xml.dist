@@ -1,55 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="vendor/autoload.php" colors="true" verbose="true"
+         forceCoversAnnotation="true"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
 
-<phpunit
-  bootstrap="vendor/autoload.php"
-  backupGlobals="false"
-  backupStaticAttributes="false"
-  colors="true"
-  verbose="true"
-  convertErrorsToExceptions="true"
-  convertNoticesToExceptions="true"
-  convertWarningsToExceptions="true"
-  processIsolation="false"
-  stopOnFailure="false"
->
+    <exclude>
+      <file>src/Config/command-seeder.php</file>
+    </exclude>
+
+    <report>
+      <html outputDirectory="reports/coverage"/>
+    </report>
+  </coverage>
+
   <testsuites>
-    <testsuite name="unit">
-      <directory>Tests/Unit</directory>
-    </testsuite>
-
-    <testsuite name="integration">
-      <directory>Tests/Integration</directory>
+    <testsuite name="tests">
+      <directory>tests</directory>
     </testsuite>
   </testsuites>
 
-  <filter>
-    <whitelist>
-      <directory suffix=".php">Source/</directory>
-    </whitelist>
-  </filter>
-
   <php>
     <env name="APP_ENV" value="testing"/>
+    <env name="APP_KEY"
+         value="base64:2+SetJaztC7g0a1sSF81LYsDasiWymO6tp8yVv6KGrA="/>
     <env name="BCRYPT_ROUNDS" value="4"/>
     <env name="CACHE_DRIVER" value="array"/>
     <env name="MAIL_DRIVER" value="array"/>
     <env name="QUEUE_CONNECTION" value="sync"/>
     <env name="SESSION_DRIVER" value="array"/>
-
-    <env name="DB_DRIVER" value="mysql"/>
-    <env name="DB_HOST" value="localhost"/>
-    <env name="DB_PORT" value="3306"/>
-    <env name="DB_DATABASE" value="laravel"/>
-    <env name="DB_USERNAME" value="root"/>
-    <env name="DB_PASSWORD" value=""/>
-    <env name="DB_CHARSET" value="utf8mb4"/>
-    <env name="DB_COLLATION" value="utf8mb4_unicode_ci"/>
   </php>
-
-  <logging>
-    <log
-      type="coverage-html"
-      target="Reports/Coverage"
-    />
-  </logging>
 </phpunit>
