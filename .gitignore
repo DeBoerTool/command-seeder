@@ -8,3 +8,4 @@ phpunit.*.xml
 phpunit.xml
 Reports/*
 !Reports/.gitkeep
+.phpunit.result.cache
