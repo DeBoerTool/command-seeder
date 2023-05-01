@@ -1,23 +1,59 @@
-# Laravel Project Template
+# Command Seeder for Laravel
+
+An Artisan console command allows calling seeders with arguments.
 
 ## Installation
 
-You can clone this repository:
-
 ```bash
-git clone https://github.com/DeBoerTool/laravel-package.git
+composer require --dev dbt/command-seeder
 ```
 
+## Config
 
-But it's more likely you'll want to use this as a template. Use GitHub's "Use this template" button to do that.
+Publish the config file:
+
+```bash
+php artisan vendor:publish --provider="Dbt\CommandSeeder\CommandSeederServiceProvider" --tag="config"
+```
+
+Then populate the `seeders` key with a map like so:
+
+```php
+'seeders' => [
+    'my-seeder' => MySeeder::class,
+];
+```
+
+## Seeders
+
+Seeders must extend the `CommandSeederAbstract` class. Each seeder must provide a list of arguments:
+
+```php
+public function argumentNames(): ArgumentNames
+{
+    return new ArgumentNames('firstArg', 'secondArg', 'etc');
+}
+```
+
+These argument names will be matched up (by index) with the provided CLI arguments and will be passed into the `run` method. If the number of required arguments doesn't match the number of given arguments, an exception will be thrown. 
+
+Additionally, the command's `OutputStyle` is passed into the seeder's constructor so you can output to the console from the seeder:
+
+```php
+public function run(Arguments $arguments, int $quantity): void
+{
+    $firstArg = $arguments->get('firstArg');
+    $allArgs = $arguments->all();
+    
+    // Create some models...
+    
+    $this->output->info('Write some output...');
+}
+```
 
 ## Usage
 
-Change the project name and namespaces in `composer.json`, `UnitTestCase`, `IntegrationTestCase`, and `ServiceProvider`. Copy `phpunit.xml.dist` to `phpunit.xml` and update the environment values to fit your project. Run `composer dump` and you should be ready to go.
+```bash
+php artisan seed:command {seederName} {quantity} {...arguments}
+```
 
-If you wish to change the name of `ServiceProvider`, keep in mind that the reference in your `IntegrationTestCase` must be changed as well. 
-
-## Etc.
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
